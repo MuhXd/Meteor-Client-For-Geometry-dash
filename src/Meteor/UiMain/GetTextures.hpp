@@ -42,13 +42,14 @@ ImTextureID TEXTURE_TO_OPENGL(const char* filename)
 
 
     GLenum format = GL_RGB;
-    if (channels == 1)
+    if (channels == 1) {
     #ifdef GL_RED
         format = GL_RED;
     #else
         geode::log::debug("GL_RED NOT SUPPORTED!");
         format = GL_RGB;
     #endif
+    }
     else if (channels == 3)
         format = GL_RGB;
     else if (channels == 4)

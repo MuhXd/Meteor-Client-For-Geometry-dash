@@ -45,6 +45,8 @@ ImTextureID TEXTURE_TO_OPENGL(const char* filename)
     if (channels == 1)
     #ifdef GL_RED
         format = GL_RED;
+    #else
+        format = GL_RGB;
     #endif
     else if (channels == 3)
         format = GL_RGB;

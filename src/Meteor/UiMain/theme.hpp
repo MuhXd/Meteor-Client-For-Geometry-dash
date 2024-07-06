@@ -28,7 +28,7 @@ textPosition.y = frameMin.y + (frameMax.y - frameMin.y - (textSize.y  + 5)  ) / 
 drawList->AddText(textPosition, IM_COL32(255, 255, 255, 255),text);
 //1032, 732
 geode::log::debug("{}, {}",frameMax.x,frameMin.x);
-drawList->AddImage(Meteor::TEXTURE_TO_OPENGL((Meteor::LoadTexture("UiTriangle.ImGui"))), ( ImVec2(frameMax.x - frameMin.x /2 ,frameMin.y)),frameMax,ImVec2(0,0),ImVec2(1,1),IM_COL32(0, 0, 0, 255) );
+drawList->AddImage(Meteor::TEXTURE_TO_OPENGL((Meteor::LoadTexture("UiTriangle.ImGui"))), ( ImVec2(frameMax.x - 64 ,frameMin.y)),frameMax,ImVec2(0,0),ImVec2(1,1),IM_COL32(0, 0, 0, 255) );
 ImGui::PopStyleColor(); 
 ImGui::End();
 return;

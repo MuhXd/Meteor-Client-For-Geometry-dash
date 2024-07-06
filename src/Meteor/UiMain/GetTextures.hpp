@@ -3,6 +3,9 @@
 #include "../MeteorClass.hpp"
 #include <imgui.h>
 #include <iostream>
+#include <Geode/Geode.hpp>
+using namespace geode::prelude;
+
 #define STB_IMAGE_IMPLEMENTATION
 #include "../uilibs/stb_image.h"
 

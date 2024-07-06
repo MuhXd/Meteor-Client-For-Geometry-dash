@@ -26,17 +26,34 @@ ImVec2 textPosition;
 textPosition.x = frameMin.x + (frameMax.x - frameMin.x - textSize.x) / 2.0f;
 textPosition.y = frameMin.y + (frameMax.y - frameMin.y - (textSize.y  + 5)  ) / 2.0f;
 drawList->AddText(textPosition, IM_COL32(255, 255, 255, 255),text);
-//1032, 732
-geode::log::debug("{}, {}",frameMax.x,frameMin.x);
-drawList->AddImage(Meteor::TEXTURE_TO_OPENGL((Meteor::LoadTexture("UiTriangle.ImGui"))), ( ImVec2( (frameMax.x - 32) - 5 ,frameMin.y - 5)),frameMax,ImVec2(0,0),ImVec2(1,1),IM_COL32(0, 0, 0, 255) );
-ImGui::PopStyleColor(); 
+
+ImVec4 originalButtonColor = ImGui::GetStyle().Colors[ImGuiCol_Button];
+ImVec4 originalButtonHoveredColor = ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered];
+ImVec4 originalButtonActiveColor = ImGui::GetStyle().Colors[ImGuiCol_ButtonActive];
+
+ImGui::GetStyle().Colors[ImGuiCol_Button] = ImVec4(0, 0, 0, 0);
+ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered] = ImVec4(0, 0, 0, 0);
+ImGui::GetStyle().Colors[ImGuiCol_ButtonActive] = ImVec4(0, 0, 0, 0);
+
+ImGui::SetCursorScreenPos(ImVec2((frameMax.x - 48 ),frameMin.y));
+ImTextureID myTexture = Meteor::TEXTURE_TO_OPENGL((Meteor::LoadTexture("UiTriangle.ImGui")));
+if (ImGui::ImageButton(myTexture, ImVec2(32 , frameMax.y - frameMin.y), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0, 0, 0, 0), ImVec4(1, 1, 1, 1)))
+{
+geode::log::debug("Clicked");
+}
+ImGui::SetCursorScreenPos(frameMin);
+//drawList->AddImage(Meteor::TEXTURE_TO_OPENGL((Meteor::LoadTexture("UiTriangle.ImGui"))), ( ImVec2( (frameMax.x - 42 ),frameMin.y)),ImVec2(frameMax.x - 10,frameMax.y),ImVec2(0,0),ImVec2(1,1),IM_COL32(0, 0, 0, 255) );
+ImGui::PopStyleColor();
+ImGui::GetStyle().Colors[ImGuiCol_Button] = originalButtonColor;
+ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered] = originalButtonHoveredColor;
+ImGui::GetStyle().Colors[ImGuiCol_ButtonActive] = originalButtonActiveColor; 
 ImGui::End();
 return;
 }
 void Setup() {
 // It's a callback as ImGui will be re-initialized when toggling fullscreen,
 // so use this to setup any themes and/or fonts!
-auto* font = ImGui::GetIO().Fonts->AddFontFromFileTTF((Mod::get()->getResourcesDir() / "JetBrains Mono.ttf").string().c_str(), 20.0f);
+auto* font = ImGui::GetIO().Fonts->AddFontFromFileTTF(Meteor::LoadTexture("DefaultFont.ttf"), 20.0f);
 return;
 }
 

@@ -7,8 +7,8 @@
 #include "UiMain/theme.hpp"
 
 using namespace geode::prelude;
-namespace Meteor {
-namespace UI {
+
+namespace Meteor::UI {
     bool UiInit = false;
     void MetorInit() {
     if (UiInit) {
@@ -27,5 +27,4 @@ namespace UI {
         ImGui::End();
     });
     }
-}
 }

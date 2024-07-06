@@ -10,5 +10,11 @@
 	"name": "Meteor Client",
 	"version": "v0.22.61",
 	"developer": "Viper",
-	"description": "Minecraft Metetor client for Geometry dash"
+	"resources": {
+	"files": [
+			"Assets/Fonts/*.ttf",
+			"Assets/Textures/*"
+		]
+	},
+	"description": "Minecraft Meteor client for Geometry dash"
 }

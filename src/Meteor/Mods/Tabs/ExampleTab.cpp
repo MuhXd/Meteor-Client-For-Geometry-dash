@@ -1,9 +1,7 @@
-#include <Meteor/UiMain/theme.hpp>  
-#include <Meteor/MeteorClass.hpp> 
-#include <Meteor/UiMain/modhandler.hpp>
+#include <MeteorMain/Includes.hpp>
 
-Meteor::Types::MeteorTab Type = {
+Meteor::Types::MeteorTab types = {
     "HELLO","ID",1
 };
 
-Meteor::UI::Theme::NewTab(Type);
+Meteor::UI::Theme::NewTab(types);

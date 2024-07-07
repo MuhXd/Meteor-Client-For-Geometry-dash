@@ -9,7 +9,7 @@ namespace Meteor::UI::Theme {
 
 static std::vector<Meteor::Types::MeteorTab> tabs;
 
-inline void NewTab(Meteor::Types::MeteorTab registerTab) {
+static void NewTab(Meteor::Types::MeteorTab registerTab) {
     tabs.push_back(registerTab);
 }
 

@@ -1,8 +1,9 @@
 
-#pragma once
 #include "../MeteorClass.hpp"
 #include <imgui.h>
 
+#ifndef METEOR_TAB_HPP
+#define METEOR_TAB_HPP
 namespace Meteor::Types {
 struct Mod {
         std::string Name = "v";
@@ -22,3 +23,4 @@ struct MeteorTab {
         std::vector<Meteor::Types::Mod> mods = {};
     };
 };
+#endif

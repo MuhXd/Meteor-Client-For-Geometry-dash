@@ -9,7 +9,7 @@
 using namespace geode::prelude;
 
 namespace Meteor::UI {
-    bool UiInit = false;
+    inline bool UiInit = false;
     inline void MetorInit() {
     if (UiInit) {
         return;

@@ -15,7 +15,7 @@ struct InfoHandler
         
 class Mod {
         public:
-                InfoHandler ModInfo() {
+                virtual InfoHandler ModInfo() {
                 Meteor::Types::InfoHandler info;
                         info.Name = "Name";
                         info.id = "ID";
@@ -31,7 +31,7 @@ class Mod {
 };
 class MeteorTab {
         public:
-                InfoHandler ModInfo() {
+                virtual InfoHandler ModInfo() {
                 Meteor::Types::InfoHandler info;
                         info.Name = "Name";
                         info.id = "ID";

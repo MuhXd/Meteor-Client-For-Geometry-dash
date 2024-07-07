@@ -5,16 +5,23 @@
 #include "GetTextures.hpp"
 #include "modhandler.hpp"
 
+#define REGISTER_NEWTAB(Class) $execute { Meteor::UI::Theme::NewTab<Class>(); }
+
 namespace Meteor::UI::Theme {
 
-static std::vector<Meteor::Types::MeteorTab> tabs;
+inline std::vector<Meteor::Types::MeteorTab*> tabs;
 
-static void NewTab(Meteor::Types::MeteorTab registerTab) {
+static void NewTab(Meteor::Types::MeteorTab* registerTab) {
     tabs.push_back(registerTab);
 }
 
-inline void DrawTab(Meteor::Types::MeteorTab tab) {
-    ImGui::Begin(tab.id, nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar);
+template<typename T, typename = std::enable_if_t<std::is_base_of_v<Meteor::Types::MeteorTab, T>>>
+        static void NewTab() { NewTab(new T()); }
+
+
+inline void DrawTab(Meteor::Types::MeteorTab* tab) {
+    Meteor::Types::InfoHandler info = tab->info();
+    ImGui::Begin(info.id, nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar);
     ImGui::SetWindowSize(ImVec2(300, 1000));
 
     ImVec2 frameSize(300, 30);
@@ -26,7 +33,7 @@ inline void DrawTab(Meteor::Types::MeteorTab tab) {
     ImVec2 frameMax(frameMin.x + frameSize.x, frameMin.y + frameSize.y);
     drawList->AddRectFilledMultiColor(frameMin, frameMax, IM_COL32(127, 0, 255, 255), IM_COL32(100, 0, 255, 255), IM_COL32(127, 0, 255, 255), IM_COL32(127, 0, 255, 255));
 
-    const char* text = tab.Name;
+    const char* text = info.Name;
     ImVec2 textSize = ImGui::CalcTextSize(text);
     ImVec2 textPosition;
     textPosition.x = frameMin.x + (frameMax.x - frameMin.x - textSize.x) / 2.0f;
@@ -58,7 +65,7 @@ inline void DrawTab(Meteor::Types::MeteorTab tab) {
 }
 
 inline void Draw() {
-    for (Meteor::Types::MeteorTab tab : tabs) {
+    for (Meteor::Types::MeteorTab* tab : Meteor::UI::Theme::tabs) {
         DrawTab(tab);
     }
 }

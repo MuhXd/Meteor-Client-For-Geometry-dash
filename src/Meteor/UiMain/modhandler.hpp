@@ -1,26 +1,31 @@
 
+#pragma once
 #include "../MeteorClass.hpp"
 #include <imgui.h>
 
-#ifndef METEOR_TAB_HPP
-#define METEOR_TAB_HPP
+
 namespace Meteor::Types {
-struct Mod {
-        std::string Name = "v";
-        std::string Devs = "";
-        std::string id = "v.v";
-        bool showdevs = false;
-        bool enabled = false;
-        bool cheat = false;
-        void update(float delta);
-        void draw();
-        void init();
+struct InfoHandler
+{
+        const char* Name = "v";
+        const char* Devs = "";
+        const char* id = "v.v";            
 };
-struct MeteorTab {
-        const char* Name = "";
-        const char* id = "";
-        int posnum = 0;
-        std::vector<Meteor::Types::Mod> mods = {};
+        
+class Mod {
+        public:
+                InfoHandler ModJson() {return InfoHandler {"Name","ID",0}; };
+                bool showdevs = false;
+                bool enabled = false;
+                bool cheat = false;
+                void update(float delta);
+                void draw();
+                void init();
+};
+class MeteorTab {
+        public:
+                InfoHandler ModJson() {return InfoHandler {"Name","ID",0}; };
+                int posnum = 1;
+                std::vector<Meteor::Types::Mod> mods = {};
     };
 };
-#endif

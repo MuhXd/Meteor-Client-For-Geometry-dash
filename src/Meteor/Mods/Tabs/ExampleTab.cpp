@@ -1,7 +1,12 @@
+#include <Geode/Geode.hpp>
 #include <MeteorMain/Includes.hpp>
-
-Meteor::Types::MeteorTab types = {
-    "HELLO","ID",1
+using namespace geode::prelude;
+using namespace Meteor;
+class TestTab : public Meteor::Types::MeteorTab {
+    Meteor::Types::InfoHandler ModJson() {
+        return Meteor::Types::InfoHandler {"Name","ID",0}; 
+   };
 };
 
-Meteor::UI::Theme::NewTab(types);
+REGISTER_NEWTAB(TestTab)
+

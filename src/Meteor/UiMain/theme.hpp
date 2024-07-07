@@ -9,11 +9,11 @@ namespace Meteor::UI::Theme {
 
 static std::vector<Meteor::Types::MeteorTab> tabs;
 
-static void NewTab(const Meteor::Types::MeteorTab& registerTab) {
+inline void NewTab(Meteor::Types::MeteorTab registerTab) {
     tabs.push_back(registerTab);
 }
 
-void DrawTab(const Meteor::Types::MeteorTab& tab) {
+inline void DrawTab(Meteor::Types::MeteorTab tab) {
     ImGui::Begin(tab.id, nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar);
     ImGui::SetWindowSize(ImVec2(300, 1000));
 
@@ -57,13 +57,13 @@ void DrawTab(const Meteor::Types::MeteorTab& tab) {
     ImGui::End();
 }
 
-void Draw() {
-    for (const auto& tab : tabs) {
+inline void Draw() {
+    for (Meteor::Types::MeteorTab tab : tabs) {
         DrawTab(tab);
     }
 }
 
-void Setup() {
+inline void Setup() {
     ImGuiIO& io = ImGui::GetIO();
     io.Fonts->AddFontFromFileTTF(Meteor::LoadTexture("DefaultFont.ttf"), 20.0f);
 }

@@ -6,11 +6,10 @@
 #include <Geode/Geode.hpp>
 using namespace geode::prelude;
 
-#define STB_IMAGE_IMPLEMENTATION
 #include "../uilibs/stb_image.h"
 
 namespace Meteor {
-const char* LoadTexture(std::string texture) {
+inline const char* LoadTexture(std::string texture) {
     if (texture == "DefaultFont.ttf") {
         return (Mod::get()->getResourcesDir() / "JetBrains Mono.ttf").string().c_str();
     } else if ( texture == "UiTriangle.ImGui")
@@ -22,7 +21,7 @@ const char* LoadTexture(std::string texture) {
 }
 
 
-ImTextureID TEXTURE_TO_OPENGL(const char* filename)
+inline ImTextureID TEXTURE_TO_OPENGL(const char* filename)
 {
 
     int width, height, channels;

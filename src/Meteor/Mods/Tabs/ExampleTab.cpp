@@ -3,8 +3,12 @@
 using namespace geode::prelude;
 using namespace Meteor;
 class TestTab : public Meteor::Types::MeteorTab {
-    Meteor::Types::InfoHandler ModJson() {
-        return Meteor::Types::InfoHandler {"Name","ID",0}; 
+    Meteor::Types::InfoHandler ModInfo() {
+        Meteor::Types::InfoHandler info;
+        info.Name = "UTILS";
+        info.id = "Meteor.Utils";
+        info.posnum = 0;
+        return info;
    };
 };
 

@@ -9,12 +9,19 @@ struct InfoHandler
 {
         const char* Name = "v";
         const char* Devs = "";
-        const char* id = "v.v";            
+        const char* id = "v.v";  
+        int posnum = 1;          
 };
         
 class Mod {
         public:
-                InfoHandler ModJson() {return InfoHandler {"Name","ID",0}; };
+                InfoHandler ModInfo() {
+                Meteor::Types::InfoHandler info;
+                        info.Name = "Name";
+                        info.id = "ID";
+                        info.posnum = 0;
+                        return info;
+                };
                 bool showdevs = false;
                 bool enabled = false;
                 bool cheat = false;
@@ -24,8 +31,13 @@ class Mod {
 };
 class MeteorTab {
         public:
-                InfoHandler ModJson() {return InfoHandler {"Name","ID",0}; };
-                int posnum = 1;
+                InfoHandler ModInfo() {
+                Meteor::Types::InfoHandler info;
+                        info.Name = "Name";
+                        info.id = "ID";
+                        info.posnum = 0;
+                        return info;
+                };
                 std::vector<Meteor::Types::Mod> mods = {};
     };
 };

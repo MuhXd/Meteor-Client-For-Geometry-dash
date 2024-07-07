@@ -20,7 +20,7 @@ template<typename T, typename = std::enable_if_t<std::is_base_of_v<Meteor::Types
 
 
 inline void DrawTab(Meteor::Types::MeteorTab* tab) {
-    Meteor::Types::InfoHandler info = tab->info();
+    Meteor::Types::InfoHandler info = tab->ModInfo();
     ImGui::Begin(info.id, nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar);
     ImGui::SetWindowSize(ImVec2(300, 1000));
 

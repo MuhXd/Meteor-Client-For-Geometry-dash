@@ -10,7 +10,10 @@ struct InfoHandler
         const char* Name = "v";
         const char* Devs = "";
         const char* id = "v.v";  
-        int posnum = 1;          
+        const char* tabID = "Meteor.Utils";  
+        int posnum = 1;
+        bool cheat = false;
+        bool showdevs = false;  
 };
         
 class Mod {
@@ -19,12 +22,12 @@ class Mod {
                 Meteor::Types::InfoHandler info;
                         info.Name = "Name";
                         info.id = "ID";
-                        info.posnum = 0;
+                        info.showdevs = false;
+                        info.Devs = "Viper :3";
+                        info.tabID = "UTILS";
                         return info;
                 };
-                bool showdevs = false;
                 bool enabled = false;
-                bool cheat = false;
                 void update(float delta);
                 void draw();
                 void init();
@@ -38,6 +41,7 @@ class MeteorTab {
                         info.posnum = 0;
                         return info;
                 };
-                std::vector<Meteor::Types::Mod> mods = {};
+                bool enabled = true;
+                std::vector<Meteor::Types::Mod*> mods = {};
     };
 };

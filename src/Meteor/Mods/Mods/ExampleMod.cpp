@@ -2,8 +2,8 @@
 #include <MeteorMain/Includes.hpp>
 using namespace geode::prelude;
 using namespace Meteor;
-class TestMod : public Meteor::Types::MeteorTab {
-    InfoHandler ModInfo() override {
+class TestMod : public Meteor::Types::Mod {
+    Meteor::Types::InfoHandler ModInfo() override {
                 Meteor::Types::InfoHandler info;
                         info.Name = "HEY!";
                         info.id = "ID";

@@ -9,20 +9,21 @@
 
 #define REGISTER_NEWMOD(Class) $execute { Meteor::UI::Theme::NewMod<Class>(); }
 
+
 namespace Meteor::UI::Theme {
 
 inline std::vector<Meteor::Types::MeteorTab*> tabs;
 inline std::vector<Meteor::Types::Mod*> ModsToAdd;
-
+inline int index = 0;
 static void NewTab(Meteor::Types::MeteorTab* registerTab) {
     tabs.push_back(registerTab);
 }
 
-template<typename T, typename = std::enable_if_t<std::is_base_of_v<Meteor::Types::MeteorTab, T>>>
-        static void NewTab() { NewTab(new T()); }
+template<typename TAB, typename = std::enable_if_t<std::is_base_of_v<Meteor::Types::MeteorTab, TAB>>>
+        static void NewTab() { NewTab(new TAB()); }
 
 
-static void NewMod(Meteor::Types::Mod* registerTab) {
+static void NewMod(Meteor::Types::Mod* registerTab, bool restart = true) {
     Meteor::Types::InfoHandler ginfo = registerTab->ModInfo();
     bool found = false;
     for (Meteor::Types::MeteorTab* tab : Meteor::UI::Theme::tabs) {
@@ -33,14 +34,13 @@ static void NewMod(Meteor::Types::Mod* registerTab) {
             break;
         }
     }
-    if (!found) {
-        log::debug("A MOD WAS UNABLE TO BE ADDED");
-         ModsToAdd.push_back(registerTab);
+    if (!found && restart) {
+        ModsToAdd.push_back(registerTab);
     }
 }
 
-template<typename T, typename = std::enable_if_t<std::is_base_of_v<Meteor::Types::Mod, T>>>
-        static void NewMod() { NewMod(new T()); }
+template<typename MOD, typename = std::enable_if_t<std::is_base_of_v<Meteor::Types::Mod, MOD>>>
+        static void NewMod() { NewMod(new MOD()); }
 
 
 
@@ -69,17 +69,16 @@ inline void DrawTab(Meteor::Types::MeteorTab* tab) {
     ImVec4 originalButtonHoveredColor = ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered];
     ImVec4 originalButtonActiveColor = ImGui::GetStyle().Colors[ImGuiCol_ButtonActive];
 
-    //ImGui::GetStyle().Colors[ImGuiCol_Button] = ImVec4(0, 0, 0, 0);
-  //  ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered] = ImVec4(0, 0, 0, 0);
-   // ImGui::GetStyle().Colors[ImGuiCol_ButtonActive] = ImVec4(0, 0, 0, 0);
+    ImGui::GetStyle().Colors[ImGuiCol_Button] = ImVec4(0, 0, 0, 0);
+    ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered] = ImVec4(0, 0, 0, 0);
+    ImGui::GetStyle().Colors[ImGuiCol_ButtonActive] = ImVec4(0, 0, 0, 0);
 
     ImGui::SetCursorScreenPos(ImVec2((frameMax.x - 48), frameMin.y));
     ImTextureID myTexture = Meteor::TEXTURE_TO_OPENGL(Meteor::LoadTexture("UiTriangle.ImGui"));
-    int index = 0;
     ImGui::PushID(index);
-    if (ImGui::ImageButton(myTexture, ImVec2(32, frameMax.y - frameMin.y), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0, 0, 0, 0), ImVec4(1, 1, 1, 1))) {
-        //tab->enabled = !tab->enabled;
-        log::debug("click");
+    bool fix = ImGui::ImageButton(myTexture, ImVec2(32, frameMax.y - frameMin.y), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0, 0, 0, 0), ImVec4(1, 1, 1, 1)) || ImGui::IsItemClicked(); // should kinda fix it :shrug:
+    if (fix) {
+        tab->enabled = !tab->enabled;
     }
     ImGui::PopID();
     index+=1;
@@ -92,17 +91,25 @@ inline void DrawTab(Meteor::Types::MeteorTab* tab) {
     ImGui::GetStyle().Colors[ImGuiCol_ButtonActive] = originalButtonActiveColor;
     if (tab->enabled) {
         for (Meteor::Types::Mod* bew : tab->mods) {
+            //ImGui::SetCursorPos(ImVec2(frameMin.x, frameMin.y - 3));
             ImGui::Button(bew->ModInfo().Name);
-            log::debug("{}",bew->ModInfo().Name);
+            ImGui::Button(bew->ModInfo().Name);
+            ImGui::Button(bew->ModInfo().Name);
          }
     }
     ImGui::End();
 }
 
 inline void Draw() {
+    index = 1;
     for (Meteor::Types::MeteorTab* tab : Meteor::UI::Theme::tabs) {
         DrawTab(tab);
     }
+    auto md = ModsToAdd;
+    ModsToAdd.clear();
+     for (Meteor::Types::Mod* bew : md) {
+        NewMod(bew, true);
+     }
 }
 
 inline void Setup() {

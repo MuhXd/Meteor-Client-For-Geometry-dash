@@ -22,7 +22,7 @@ namespace Meteor::UI {
         // so use this to setup any themes and/or fonts!
     }).draw([] {
         Meteor::UI::Theme::Draw();
-        ImGui::ShowDemoWindow();
+        //ImGui::ShowDemoWindow();
 
         ImGui::End();
     });

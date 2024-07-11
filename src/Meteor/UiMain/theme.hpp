@@ -46,8 +46,9 @@ template<typename MOD, typename = std::enable_if_t<std::is_base_of_v<Meteor::Typ
 
 inline void DrawTab(Meteor::Types::MeteorTab* tab) {
     Meteor::Types::InfoHandler info = tab->ModInfo();
-    ImGui::Begin(info.id, nullptr, ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar);
-    ImGui::SetWindowSize(ImVec2(300, 1000));
+    // ImGuiWindowFlags_NoBackground
+    ImGui::Begin(info.id, nullptr, ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoScrollbar);
+
 
     ImVec2 frameSize(300, 30);
     ImVec2 framePos(0, 0);
@@ -56,6 +57,7 @@ inline void DrawTab(Meteor::Types::MeteorTab* tab) {
 
     ImVec2 frameMin = ImGui::GetCursorScreenPos();
     ImVec2 frameMax(frameMin.x + frameSize.x, frameMin.y + frameSize.y);
+       ImGui::SetWindowSize(ImVec2(300, 200));
     drawList->AddRectFilledMultiColor(frameMin, frameMax, IM_COL32(127, 0, 255, 255), IM_COL32(100, 0, 255, 255), IM_COL32(127, 0, 255, 255), IM_COL32(127, 0, 255, 255));
 
     const char* text = info.Name;
@@ -83,6 +85,7 @@ inline void DrawTab(Meteor::Types::MeteorTab* tab) {
     ImGui::PopID();
     index+=1;
 
+
     ImGui::SetCursorScreenPos(frameMin);
 
     ImGui::PopStyleColor();
@@ -90,11 +93,11 @@ inline void DrawTab(Meteor::Types::MeteorTab* tab) {
     ImGui::GetStyle().Colors[ImGuiCol_ButtonHovered] = originalButtonHoveredColor;
     ImGui::GetStyle().Colors[ImGuiCol_ButtonActive] = originalButtonActiveColor;
     if (tab->enabled) {
+        ImGui::NewLine();
+        ImGui::SetCursorScreenPos(ImVec2(frameMin.x, frameMax.y + 1)); // Adjust starting position for buttons
         for (Meteor::Types::Mod* bew : tab->mods) {
             //ImGui::SetCursorPos(ImVec2(frameMin.x, frameMin.y - 3));
-            ImGui::Button(bew->ModInfo().Name);
-            ImGui::Button(bew->ModInfo().Name);
-            ImGui::Button(bew->ModInfo().Name);
+            ImGui::Button(bew->ModInfo().Name,frameSize);
          }
     }
     ImGui::End();
